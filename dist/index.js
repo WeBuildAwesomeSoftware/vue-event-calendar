@@ -302,6 +302,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -829,13 +836,19 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "wrapper"
+  }, [_c('div', {
+    staticClass: "p-1"
   }, [_c('h3', {
     staticClass: "title"
-  }, [_vm._v(_vm._s(_vm.index + 1) + ". " + _vm._s(_vm.event.title))]), _vm._v(" "), _c('p', {
+  }, [_vm._v(_vm._s(_vm.index + 1) + ". " + _vm._s(_vm.event.title))])]), _vm._v(" "), _c('div', {
+    staticClass: "p-1"
+  }, [_c('p', {
     staticClass: "time"
-  }, [_vm._v(_vm._s(_vm.dateTimeFormatter(Date.parse(new Date(_vm.event.date)), _vm.i18n[_vm.locale].fullFormat)))]), _vm._v(" "), _c('p', {
+  }, [_vm._v(_vm._s(_vm.dateTimeFormatter(Date.parse(new Date(_vm.event.date)), _vm.i18n[_vm.locale].fullFormat)))])]), _vm._v(" "), _c('div', {
+    staticClass: "p-1"
+  }, [_c('p', {
     staticClass: "desc"
-  }, [_vm._v(_vm._s(_vm.event.desc))])])
+  }, [_vm._v(_vm._s(_vm.event.desc))])])])
 },staticRenderFns: []}
 
 /***/ }),
