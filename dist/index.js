@@ -844,7 +844,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "p-1"
   }, [_c('p', {
     staticClass: "time"
-  }, [_c('small', [_vm._v("Starts:")]), _vm._v(_vm._s(_vm.dateTimeFormatter(Date.parse(new Date(_vm.event.date)), _vm.i18n[_vm.locale].fullFormat)))])]), _vm._v(" "), _c('div', {
+  }, [_c('small', [_vm._v("Starts: ")]), _vm._v(_vm._s(_vm.dateTimeFormatter(Date.parse(new Date(_vm.event.date)), _vm.i18n[_vm.locale].fullFormat)))])]), _vm._v(" "), _c('div', {
     staticClass: "p-1"
   }, [_c('p', {
     staticClass: "desc"
