@@ -288,15 +288,11 @@ export default {
       color: #323232;
       position: relative;
       .title{
-        height: 40px;
-        line-height: 40px;
         color: #323232;
         font-size: 16px;
         border-bottom: 1px solid #f2f2f2;
       }
       .time{
-        position: absolute;
-        right: 30px;
         top: 17px;
         color: #9b9b9b;
         font-size: 14px;
