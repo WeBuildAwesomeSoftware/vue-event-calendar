@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper">
     <div class="p-1">
-    <h3 class="title">{{index+1}}. {{event.title}}</h3>
+      <h3 class="title">{{index+1}}. {{event.title}}</h3>
     </div>
     <div class="p-1">
-    <p class="time">{{dateTimeFormatter(Date.parse(new Date(event.date)),i18n[locale].fullFormat)}}</p>
+      <p class="time">{{dateTimeFormatter(Date.parse(new Date(event.date)),i18n[locale].fullFormat)}}</p>
     </div>
     <div class="p-1">
-    <p class="desc">{{event.desc}}</p>
+      <p class="desc">{{event.desc}}</p>
     </div>
   </div>
 </template>

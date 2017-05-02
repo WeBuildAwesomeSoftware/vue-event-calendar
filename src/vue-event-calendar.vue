@@ -288,6 +288,7 @@ export default {
       color: #323232;
       position: relative;
       .title{
+        padding-bottom: 10px;
         color: #323232;
         font-size: 16px;
         border-bottom: 1px solid #f2f2f2;
