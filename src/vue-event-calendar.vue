@@ -124,7 +124,6 @@ export default {
     margin: 0 auto;
     .cal-wrapper{
       width: 50%;
-      padding: 100px 50px;
       .date-num{
         line-height: 50px;
       }
@@ -145,7 +144,6 @@ export default {
   .__vev_calendar-wrapper{
     .cal-wrapper{
       width: 100%;
-      padding: 10px 5px;
       .date-num{
         line-height: 42px;
       }
