@@ -4,7 +4,7 @@
       <h3 class="title">{{index+1}}. {{event.title}}</h3>
     </div>
     <div class="p-1">
-      <p class="time">{{ Date.parse(new Date(event.date)) }}</p>
+      <p class="time">{{dateTimeFormatter(Date.parse(new Date(event.date)),i18n[locale].fullFormat)}}</p>
     </div>
     <div class="p-1">
       <p class="desc">{{event.desc}}</p>
@@ -12,6 +12,8 @@
   </div>
 </template>
 <script>
+import i18n from '../i18n.js'
+import { dateTimeFormatter } from '../tools.js'
 
 export default {
   data () {
@@ -27,7 +29,14 @@ export default {
     index: {
       type: Number,
       required: true
+    },
+    locale: {
+      type: String,
+      required: true
     }
+  },
+  methods: {
+    dateTimeFormatter
   }
 }
 </script>
