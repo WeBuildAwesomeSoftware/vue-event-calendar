@@ -4,7 +4,7 @@
       <h3 class="title">{{index+1}}. {{event.title}}</h3>
     </div>
     <div class="p-1">
-      <p class="time">{{dateTimeFormatter(Date.parse(new Date(event.date)),i18n[locale].fullFormat)}}</p>
+      <p class="time"><small>Starts: </small>{{dateTimeFormatter(Date.parse(new Date(event.date)),i18n[locale].fullFormat)}}</p>
     </div>
     <div class="p-1">
       <p class="desc">{{event.desc}}</p>
