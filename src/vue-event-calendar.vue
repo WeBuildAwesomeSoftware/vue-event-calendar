@@ -267,7 +267,8 @@ export default {
   .events-wrapper{
     border-radius: 10px;
     .cal-events{
-      height: 100%;
+      max-height: 400px;
+      overflow-y: scroll;
     }
     .date{
       width: 40%;

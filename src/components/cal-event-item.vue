@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <div class="p-1">
+    <div>
       <h3 class="title">{{index+1}}. {{event.title}}</h3>
     </div>
-    <div class="p-1">
+    <div>
       <p class="time"><small>Starts: </small>{{dateTimeFormatter(Date.parse(new Date(event.date)),i18n[locale].fullFormat)}}</p>
     </div>
     <div class="p-1">
