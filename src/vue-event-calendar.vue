@@ -296,7 +296,6 @@ export default {
       }
       .time{
         padding-bottom: 10px;
-        border-bottom: 1px solid #f2f2f2;
         top: 17px;
         color: #9b9b9b;
         font-size: 14px;
