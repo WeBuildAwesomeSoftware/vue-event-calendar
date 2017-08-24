@@ -8,7 +8,8 @@ function install (Vue, options = {}) {
   let dateObj = new Date()
   const DEFAULT_OPTION = {
     locale: 'zh', //en
-    color: ' #f29543'
+    color: ' #f29543',
+    className:'selected-day'
   }
   let Calendar = {
     $vm: null,
