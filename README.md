@@ -24,7 +24,7 @@
 ```javascript
 import 'vue-event-calendar/dist/style.css' //^1.1.10, CSS has been extracted as one file, so you can easily update it.
 import vueEventCalendar from 'vue-event-calendar'
-Vue.use(vueEventCalendar, {locale: 'en'}) //locale can be 'zh' or 'en'
+Vue.use(vueEventCalendar, {locale: 'en'}) //locale can be 'zh' , 'en' , 'es', 'pt-br', 'ja', 'ko', 'fr'
 ```
 
 #### file.vue
@@ -92,6 +92,19 @@ export default {
 </script>
 ```
 
+## Component Events
+Can handle two Events, @day-changed and @month-changed, callback params like ``` {date: '2017/06/23', events: []} ```.
+
+```javascript
+<template>
+  <vue-event-calendar
+    :events="demoEvents"
+    @day-changed="handleDayChanged"
+    @month-changed="handleMonthChanged">
+  </vue-event-calendar>
+</template>
+```
+
 ## API
 ```javascript
 // NextMonth
@@ -113,4 +126,9 @@ npm run dev  //develop
 npm run build //production
 ```
 
+## Change log
 
+##### 1.3.6 -> 1.4.0
+
+- Remove today background, use a small dot below the date
+- Increase the selected date style
