@@ -29,7 +29,7 @@ Vue.use(vueEventCalendar, {locale: 'en'}) //可以设置语言，支持中文和
 
 ```vue
 <template>
-  <vue-event-calendar :events="demoEvents" @monthChanged="" @dayChanged=""></vue-event-calendar>
+  <vue-event-calendar :events="demoEvents"></vue-event-calendar>
 </template>
 
 <script>
@@ -44,14 +44,6 @@ export default {
         date: '2016/11/12',
         title: 'this is a title'
       }]
-    }
-  },
-  methods: {
-    monthChange (month) {
-      console.log(month)
-    },
-    dayChange (day) {
-      console.log(day)
     }
   }
 }
@@ -98,18 +90,6 @@ export default {
 </script>
 ```
 
-## Events
-可以监听的事件有两个，选择了哪天和当月是哪月，当发生改变时，会触发监听函数。函数中的回调参数为改变后的日期。
-```
-<template>
-  <vue-event-calendar
-    :events="demoEvents"
-    @day-changed="handleDayChanged"
-    @month-changed="handleMonthChanged">
-  </vue-event-calendar>
-</template>
-```
-
 ## API
 ```javascript
 // 下个月
@@ -132,9 +112,4 @@ npm run dev  //develop
 npm run build //production
 ```
 
-## Change log
 
-##### 1.3.6 -> 1.4.0
-
-- 去除了当天的背景，改用一个在日期下面的小圆点替代
-- 增加选中日期样式

@@ -44,13 +44,11 @@ export default {
   computed: {
     dayEventsTitle () {
       if (this.dayEvents.date !== 'all') {
-        let tempDate
         if (this.dayEvents.events.length !== 0) {
-          tempDate = Date.parse(new Date(this.dayEvents.events[0].date))
+          let tempDate = Date.parse(new Date(this.dayEvents.events[0].date))
           return dateTimeFormatter(tempDate, i18n[this.locale].fullFormat)
         } else {
-          tempDate = dateTimeFormatter(Date.parse(new Date(this.dayEvents.date)), i18n[this.locale].fullFormat)
-          return `${tempDate} ${i18n[this.locale].notHaveEvents}`
+          return this.dayEvents.date + i18n[this.locale].notHaveEvents
         }
       } else {
         return i18n[this.locale].dayEventsTitle

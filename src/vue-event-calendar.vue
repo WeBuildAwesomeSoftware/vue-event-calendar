@@ -3,15 +3,13 @@
     <cal-panel
       :events="events"
       :calendar="calendarOptions"
-      :selectedDay='selectedDayEvents.date'
-      @cur-day-changed="handleChangeCurDay"
-      @month-changed="handleMonthChanged">
+      @cur-day-changed="handleChangeCurDay">
     </cal-panel>
     <cal-events
-      :dayEvents="selectedDayEvents"
+      :dayEvents="selectdDayEvents"
       :locale="calendarOptions.options.locale"
       :color="calendarOptions.options.color">
-      <slot :showEvents="selectedDayEvents.events"></slot>
+      <slot :showEvents="selectdDayEvents.events"></slot>
     </cal-events>
   </div>
 </template>
@@ -30,7 +28,7 @@ export default {
   },
   data () {
     return {
-      selectedDayEvents: {
+      selectdDayEvents: {
         date: 'all',
         events: this.events || []  //default show all event
       }
@@ -39,18 +37,7 @@ export default {
   props: {
     events: {
       type: Array,
-      required: true,
-      default: [],
-      validator (events) {
-        let validate = true
-        events.forEach((event, index) => {
-          if (!event.date) {
-            console.error('Vue-Event-Calendar-Error:' + 'Prop events Wrong at index ' + index)
-            validate = false
-          }
-        })
-        return validate
-      }
+      required: true
     }
   },
   computed: {
@@ -82,7 +69,7 @@ export default {
           curYear: dateObj.getFullYear(),
           curMonth: dateObj.getMonth(),
           curDate: dateObj.getDate(),
-          curEventsDate: 'all'
+          curEventsDate: dateString
         }
       }
     }
@@ -94,43 +81,27 @@ export default {
   },
   methods: {
     handleChangeCurDay (date) {
-      let events = this.events.filter(function(event) {
-        return isEqualDateStr(event.date, date)
-      })
-      if (events.length > 0) {
-        this.selectedDayEvents = {
-          date: date,
-          events: events
-        }
-      }
-      this.$emit('day-changed', {
+      this.selectdDayEvents = {
         date: date,
-        events: events
-      })
-    },
-    handleMonthChanged (yearMonth) {
-      this.$emit('month-changed', yearMonth)
+        events: this.events.filter(function(event) {
+          return isEqualDateStr(event.date, date)
+        })
+      }
     }
   },
   watch: {
     calendarParams () {
       if (this.calendarParams.curEventsDate !== 'all') {
-        let events = this.events.filter(event => {
-          return isEqualDateStr(event.date, this.calendarParams.curEventsDate)
-        })
-        this.selectedDayEvents = {
-          date: this.calendarParams.curEventsDate,
-          events
-        }
+        this.handleChangeCurDay(this.calendarParams.curEventsDate)
       } else {
-        this.selectedDayEvents = {
+        this.selectdDayEvents = {
           date: 'all',
           events: this.events
         }
       }
     },
     events () {
-      this.selectedDayEvents = {
+      this.selectdDayEvents = {
         date: 'all',
         events: this.events || []
       }
@@ -161,7 +132,7 @@ export default {
       width: 50%;
       background-color: @base-orange;
       color: @white;
-      padding: 40px 45px;
+      padding: 40px 50px;
       position: absolute;
       left: 50%;
       top: 0;
@@ -190,18 +161,6 @@ export default {
   width: 100%;
   *{
     box-sizing: border-box;
-  }
-  ::-webkit-scrollbar{
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 2px #c27736;
-    border-radius: 5px;
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background: #c27736;
   }
   .cal-wrapper{
     .cal-header{
@@ -267,12 +226,8 @@ export default {
             z-index: 3;
           }
           &.event{
+            color: @base-orange;
             cursor: pointer;
-          }
-          &.selected-day{
-            .is-event{
-              background-color: @base-orange;
-            }
           }
           .is-event{
             content: '';
@@ -284,23 +239,26 @@ export default {
             position: absolute;
             left: 50%;
             top: 50%;
-            z-index: 1;
+            z-index: 2;
             margin-left: -18px;
             margin-top: -19px;
           }
+          &.today{
+            color: @white;
+          }
           .is-today{
             content: '';
+            border: 1px solid @base-orange;
             background-color: @base-orange;
             border-radius: 50%;
-            opacity: .8;
-            width: 12px;
-            height: 4px;
+            width: 36px;
+            height: 36px;
             position: absolute;
             left: 50%;
             top: 50%;
-            z-index: 2;
-            margin-left: -6px;
-            margin-top: 8px;
+            z-index: 1;
+            margin-left: -18px;
+            margin-top: -19px;
           }
         }
       }
@@ -313,7 +271,7 @@ export default {
       overflow-y: scroll;
     }
     .date{
-      max-width: 60%;
+      width: 40%;
       min-width: 200px;
       text-align: center;
       color: @white;
@@ -349,45 +307,46 @@ export default {
       }
     }
   }
-  .arrow-left.icon {
-    color: #000;
-    position: absolute;
-    left: 6%;
-    margin-top: 10px;
-  }
-  .arrow-left.icon:before {
-    content: '';
-    position: absolute;
-    left: 1px;
-    top: -5px;
-    width: 10px;
-    height: 10px;
-    border-top: solid @icon-border-size currentColor;
-    border-right: solid @icon-border-size currentColor;
-    -webkit-transform: rotate(-135deg);
-            transform: rotate(-135deg);
-  }
-  .arrow-right.icon {
-    color: #000;
-    position: absolute;
-    right: 6%;
-    margin-top: 10px;
-  }
-  .arrow-right.icon:before {
-    content: '';
-    position: absolute;
-    right: 1px;
-    top: -5px;
-    width: 10px;
-    height: 10px;
-    border-top: solid @icon-border-size currentColor;
-    border-right: solid @icon-border-size currentColor;
-    -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-  }
-  h3, p{
-    margin: 0;
-    padding: 0;
-  }
+}
+
+.arrow-left.icon {
+  color: #000;
+  position: absolute;
+  left: 6%;
+  margin-top: 10px;
+}
+.arrow-left.icon:before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-top: solid @icon-border-size currentColor;
+  border-right: solid @icon-border-size currentColor;
+  -webkit-transform: rotate(-135deg);
+          transform: rotate(-135deg);
+}
+.arrow-right.icon {
+  color: #000;
+  position: absolute;
+  right: 6%;
+  margin-top: 10px;
+}
+.arrow-right.icon:before {
+  content: '';
+  position: absolute;
+  right: 1px;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-top: solid @icon-border-size currentColor;
+  border-right: solid @icon-border-size currentColor;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+h3, p{
+  margin: 0;
+  padding: 0;
 }
 </style>
