@@ -3,7 +3,8 @@
     <cal-panel
       :events="events"
       :calendar="calendarOptions"
-      @cur-day-changed="handleChangeCurDay">
+      @cur-day-changed="handleChangeCurDay"
+      @month-changed="handleMonthChanged">
     </cal-panel>
     <cal-events
       :dayEvents="selectdDayEvents"
@@ -37,7 +38,18 @@ export default {
   props: {
     events: {
       type: Array,
-      required: true
+      required: true,
+      default: [],
+      validator (events) {
+        let validate = true
+        events.forEach((event, index) => {
+          if (!event.date) {
+            console.error('Vue-Event-Calendar-Error:' + 'Prop events Wrong at index ' + index)
+            validate = false
+          }
+        })
+        return validate
+      }
     }
   },
   computed: {
@@ -75,6 +87,7 @@ export default {
     }
   },
   created () {
+    console.log(this.events)
     if (this.calendarParams.curEventsDate !== 'all') {
       this.handleChangeCurDay(this.calendarParams.curEventsDate)
     }
@@ -87,6 +100,15 @@ export default {
           return isEqualDateStr(event.date, date)
         })
       }
+      this.$emit('day-changed', {
+        date: date,
+        events: this.events.filter(function(event) {
+          return isEqualDateStr(event.date, date)
+        })
+      })
+    },
+    handleMonthChanged (yearMonth) {
+      this.$emit('month-changed', yearMonth)
     }
   },
   watch: {
@@ -124,6 +146,7 @@ export default {
     margin: 0 auto;
     .cal-wrapper{
       width: 50%;
+      padding: 100px 50px;
       .date-num{
         line-height: 50px;
       }
@@ -144,6 +167,7 @@ export default {
   .__vev_calendar-wrapper{
     .cal-wrapper{
       width: 100%;
+      padding: 10px 5px;
       .date-num{
         line-height: 42px;
       }
@@ -267,8 +291,7 @@ export default {
   .events-wrapper{
     border-radius: 10px;
     .cal-events{
-      max-height: 400px;
-      overflow-y: scroll;
+      height: 100%;
     }
     .date{
       width: 40%;
@@ -289,13 +312,15 @@ export default {
       color: #323232;
       position: relative;
       .title{
-        padding-bottom: 10px;
+        height: 40px;
+        line-height: 40px;
         color: #323232;
         font-size: 16px;
         border-bottom: 1px solid #f2f2f2;
       }
       .time{
-        padding-bottom: 10px;
+        position: absolute;
+        right: 30px;
         top: 17px;
         color: #9b9b9b;
         font-size: 14px;
@@ -307,46 +332,45 @@ export default {
       }
     }
   }
-}
-
-.arrow-left.icon {
-  color: #000;
-  position: absolute;
-  left: 6%;
-  margin-top: 10px;
-}
-.arrow-left.icon:before {
-  content: '';
-  position: absolute;
-  left: 1px;
-  top: -5px;
-  width: 10px;
-  height: 10px;
-  border-top: solid @icon-border-size currentColor;
-  border-right: solid @icon-border-size currentColor;
-  -webkit-transform: rotate(-135deg);
-          transform: rotate(-135deg);
-}
-.arrow-right.icon {
-  color: #000;
-  position: absolute;
-  right: 6%;
-  margin-top: 10px;
-}
-.arrow-right.icon:before {
-  content: '';
-  position: absolute;
-  right: 1px;
-  top: -5px;
-  width: 10px;
-  height: 10px;
-  border-top: solid @icon-border-size currentColor;
-  border-right: solid @icon-border-size currentColor;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
-}
-h3, p{
-  margin: 0;
-  padding: 0;
+  .arrow-left.icon {
+    color: #000;
+    position: absolute;
+    left: 6%;
+    margin-top: 10px;
+  }
+  .arrow-left.icon:before {
+    content: '';
+    position: absolute;
+    left: 1px;
+    top: -5px;
+    width: 10px;
+    height: 10px;
+    border-top: solid @icon-border-size currentColor;
+    border-right: solid @icon-border-size currentColor;
+    -webkit-transform: rotate(-135deg);
+            transform: rotate(-135deg);
+  }
+  .arrow-right.icon {
+    color: #000;
+    position: absolute;
+    right: 6%;
+    margin-top: 10px;
+  }
+  .arrow-right.icon:before {
+    content: '';
+    position: absolute;
+    right: 1px;
+    top: -5px;
+    width: 10px;
+    height: 10px;
+    border-top: solid @icon-border-size currentColor;
+    border-right: solid @icon-border-size currentColor;
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+  }
+  h3, p{
+    margin: 0;
+    padding: 0;
+  }
 }
 </style>
