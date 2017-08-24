@@ -247,7 +247,7 @@ var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(8),
   /* template */
-  __webpack_require__(16),
+  __webpack_require__(15),
   /* scopeId */
   null,
   /* cssModules */
@@ -567,6 +567,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -592,7 +593,18 @@ var inBrowser = typeof window !== 'undefined';
   props: {
     events: {
       type: Array,
-      required: true
+      required: true,
+      default: [],
+      validator: function validator(events) {
+        var validate = true;
+        events.forEach(function (event, index) {
+          if (!event.date) {
+            console.error('Vue-Event-Calendar-Error:' + 'Prop events Wrong at index ' + index);
+            validate = false;
+          }
+        });
+        return validate;
+      }
     }
   },
   computed: {
@@ -630,6 +642,7 @@ var inBrowser = typeof window !== 'undefined';
     }
   },
   created: function created() {
+    console.log(this.events);
     if (this.calendarParams.curEventsDate !== 'all') {
       this.handleChangeCurDay(this.calendarParams.curEventsDate);
     }
@@ -643,6 +656,15 @@ var inBrowser = typeof window !== 'undefined';
           return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__tools_js__["a" /* isEqualDateStr */])(event.date, date);
         })
       };
+      this.$emit('day-changed', {
+        date: date,
+        events: this.events.filter(function (event) {
+          return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__tools_js__["a" /* isEqualDateStr */])(event.date, date);
+        })
+      });
+    },
+    handleMonthChanged: function handleMonthChanged(yearMonth) {
+      this.$emit('month-changed', yearMonth);
     }
   },
   watch: {
@@ -670,8 +692,8 @@ var inBrowser = typeof window !== 'undefined';
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_event_calendar_vue__ = __webpack_require__(3);
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_event_calendar_vue__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_event_calendar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__vue_event_calendar_vue__);
 
 
@@ -780,7 +802,7 @@ var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(5),
   /* template */
-  __webpack_require__(14),
+  __webpack_require__(16),
   /* scopeId */
   null,
   /* cssModules */
@@ -798,7 +820,7 @@ var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(6),
   /* template */
-  __webpack_require__(15),
+  __webpack_require__(14),
   /* scopeId */
   null,
   /* cssModules */
@@ -832,20 +854,6 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "wrapper"
-  }, [_c('div', [_c('h3', {
-    staticClass: "title p-2"
-  }, [_vm._v(_vm._s(_vm.index + 1) + ". " + _vm._s(_vm.event.title))])]), _vm._v(" "), _c('div', [_c('p', {
-    staticClass: "time p-2"
-  }, [_vm._v(_vm._s(_vm.event.desc) + ", Starts: " + _vm._s(_vm.dateTimeFormatter(Date.parse(new Date(_vm.event.date)), _vm.i18n[_vm.locale].fullFormat)))])])])
-},staticRenderFns: []}
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
     staticClass: "events-wrapper",
     style: (_vm.bgColor)
   }, [_c('h2', {
@@ -866,7 +874,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: []}
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -878,7 +886,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "calendar": _vm.calendarOptions
     },
     on: {
-      "cur-day-changed": _vm.handleChangeCurDay
+      "cur-day-changed": _vm.handleChangeCurDay,
+      "month-changed": _vm.handleMonthChanged
     }
   }), _vm._v(" "), _c('cal-events', {
     attrs: {
@@ -889,6 +898,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._t("default", null, {
     showEvents: _vm.selectdDayEvents.events
   })], 2)], 1)
+},staticRenderFns: []}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "wrapper"
+  }, [_c('div', [_c('h3', {
+    staticClass: "title p-2"
+  }, [_vm._v(_vm._s(_vm.index + 1) + ". " + _vm._s(_vm.event.title))])]), _vm._v(" "), _c('div', [_c('p', {
+    staticClass: "time p-2"
+  }, [_vm._v(_vm._s(_vm.event.desc) + ", Starts: " + _vm._s(_vm.dateTimeFormatter(Date.parse(new Date(_vm.event.date)), _vm.i18n[_vm.locale].fullFormat)))])])])
 },staticRenderFns: []}
 
 /***/ }),
